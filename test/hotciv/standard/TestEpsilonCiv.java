@@ -74,6 +74,37 @@ public class TestEpsilonCiv {
 	        assertTrue("The attacker wins", as.fight(attacker, defender));
 	    }
 	 
+	 @Test
+	    public void attackingArcherLossesBattleWhenRolling2AgainstLegionRolling2() {
+	        UnitImpl attacker = (UnitImpl) game.getUnitAt(new Position(3, 8));
+	        UnitImpl defender = (UnitImpl) game.getUnitAt(new Position(4, 4));
+	        assertEquals("The attackers strength: ", 2, attacker.getAttackingStrength());
+	        assertEquals("The defenders strength:", 2, defender.getDefensiveStrength());
+	        AttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(2), new FixedDieStrategy(2));
+	        assertTrue("The defender wins", as.fight(defender, attacker));
+	    }
+	 
+	 @Test
+	    public void attackingLegionWinsBattleWhenRolling1AgainstArcherRolling1() {
+	        UnitImpl attacker = (UnitImpl) game.getUnitAt(new Position(4, 4));
+	        UnitImpl defender = (UnitImpl) game.getUnitAt(new Position(3, 8));
+	        assertEquals("The attackers strength: ", 4, attacker.getAttackingStrength());
+	        assertEquals("The defenders strength:", 3, defender.getDefensiveStrength());
+	        AttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(1), new FixedDieStrategy(1));
+	        assertTrue("The attacker wins", as.fight(attacker, defender));
+	    }
+	 
+	 @Test
+	    public void attackingLegionLossesBattleWhenRolling2AgainstArcherRolling3() {
+	        UnitImpl attacker = (UnitImpl) game.getUnitAt(new Position(4, 4));
+	        UnitImpl defender = (UnitImpl) game.getUnitAt(new Position(3, 8));
+	        assertEquals("The attackers strength: ", 4, attacker.getAttackingStrength());
+	        assertEquals("The defenders strength:", 3, defender.getDefensiveStrength());
+	        AttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(2), new FixedDieStrategy(3));
+	        assertTrue("The defender wins", as.fight(defender, attacker));
+	    }
+	 
+	 
 	 /** Bare for lige at overbevise mig selv om at det (også) virker med en random
 	 @Test
 	    public void randomattackingArcherWinsBattleWhenRolling2AgainstLegionRolling1() {
