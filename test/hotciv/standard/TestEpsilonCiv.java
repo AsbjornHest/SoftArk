@@ -32,10 +32,10 @@ public class TestEpsilonCiv {
 
 	@Test
 	public void redShouldWinAfter3Attacks(){ // Blue unit moves from 10,0 to 3 positions with red settlers and wins
-		game.moveUnit(new Position(10,0), new Position(10,1));
-		game.moveUnit(new Position(10,1), new Position(10,2));
-		game.moveUnit(new Position(10,2), new Position(10,3));
-		assertEquals(Player.BLUE, game.getWinner());
+		game.moveUnit(new Position(12,0), new Position(12,1));
+		game.moveUnit(new Position(12,1), new Position(12,2));
+		game.moveUnit(new Position(12,2), new Position(12,3));
+		assertEquals(Player.RED, game.getWinner());
 	}
 
 	@Test

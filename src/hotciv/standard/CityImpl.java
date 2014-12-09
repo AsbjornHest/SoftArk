@@ -34,6 +34,10 @@ public class CityImpl implements City {
 		production = unitType;
 	}
 	
+	public void setOwner(Player newOwner){
+		owner = newOwner;
+	}
+	
 	@Override
 	public String getWorkforceFocus() {
 		return focus;

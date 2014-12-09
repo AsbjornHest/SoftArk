@@ -9,11 +9,9 @@ public class ZetaWinnerStrategy implements WinnerStrategy {
 	private BetaWinnerStrategy betaWinnerStrategy = new BetaWinnerStrategy();
 	private EpsilonWinnerStrategy epsilonWinnerStrategy = new EpsilonWinnerStrategy();
 	
-	private int currentRound = 0;
-
 	@Override
 	public Player getWinner(GameImpl game) {
-		if(currentRound < 21)
+		if(game.getNumberOfRound() < 20)
 		{
 			return betaWinnerStrategy.getWinner(game);
 		}

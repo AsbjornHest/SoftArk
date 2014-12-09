@@ -22,6 +22,7 @@ public class GameImpl implements Game {
     
 	private Player playerInTurn; // returns the player in turn == RED or BLUE player	
 	private int age; // age of the game
+	private int numberOfRounds;
 	
 	private HashMap<Position, City> cities = new HashMap<Position, City>(); // Hashmap with cities
 	private HashMap<Position, Tile> tiles = new HashMap<Position, Tile>(); // Hashmap with tiles
@@ -46,6 +47,7 @@ public class GameImpl implements Game {
 		age = -4000; // sets the starting age of the game to 4000BC
 		battlesWon.put(Player.RED, 0);
 		battlesWon.put(Player.BLUE, 0);
+		numberOfRounds = 0;
 		
 	
 	}
@@ -85,10 +87,16 @@ public class GameImpl implements Game {
 				incrementWinningCount(Player.BLUE);
 			}
 		}
+		if(getCityAt(to) != null){
+			if(getCityAt(to).getOwner() != getUnitAt(from).getOwner()){
+				((CityImpl) getCityAt(to)).setOwner(getUnitAt(from).getOwner());
+			}
+		}
 		Unit unit = removeUnitAt(from);
 		setUnitAt(to, unit);
 		return true;
 	}
+	
 	public Unit getUnitAt(Position p) {
 		if(units.containsKey(p) ) {
 			return units.get(p);
@@ -142,11 +150,16 @@ public class GameImpl implements Game {
 				c2.decreaseWorth(10);
 			}
 			age = ageStrategy.AgeWorld(age); // increment the age of the world
+			numberOfRounds++;
 		}
 
 
 	}
 
+	public int getNumberOfRound(){
+		return numberOfRounds;
+	}
+	
 	/** Define the world as the DeltaCiv layout */
 	private void fillTheWorld(String[] layoutString) {
 		String[] layout = layoutString;

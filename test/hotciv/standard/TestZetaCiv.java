@@ -1,9 +1,10 @@
 package hotciv.standard;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import hotciv.framework.Game;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
@@ -25,14 +26,78 @@ public class TestZetaCiv {
 		  }  }
 	
 	@Test
-    public void moveRedArcherAt2_0ToBlueCityAt4_1AndShouldConquerCity() {
-        assertEquals("There should be a blue city at (4,1)", Player.BLUE, game.getCityAt(new Position(4,1)).getOwner());
-        assertEquals("There should be a red archer at (2,0)", GameConstants.ARCHER, game.getUnitAt(new Position(2,0)).getTypeString());
-        game.moveUnit(new Position(2,0), new Position(4,1));
-        assertEquals("There should be a archer at (4,1)", GameConstants.ARCHER, game.getUnitAt(new Position(4,1)).getTypeString());
-        assertEquals("There should be a blue city at (4,1)", Player.BLUE, game.getCityAt(new Position(4,1)).getOwner());
-
-        
+    public void redTakesTheBlueCityAndWins(){
+		game.moveUnit(new Position(2,0), new Position(4,1));		
+		assertEquals(Player.RED, game.getCityAt(new Position(4,1)).getOwner());
+		assertEquals(Player.RED, game.getWinner());
+	}
+	
+	@Test
+	public void blueTAakesTheRedCityAndWins(){
+		game.moveUnit(new Position(3,2), new Position(1,1));		
+//		assertEquals(Player.RED, game.getCityAt(new Position(4,1)).getOwner());
+		assertEquals(Player.BLUE, game.getWinner());
+	}
+	
+	@Test
+	public void redShouldWinByWinning3CombatsAfter20PlusRoundsHavePassed(){
+		((GameImpl) game).setUnitAt(new Position(2,1), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+		((GameImpl) game).setUnitAt(new Position(2,2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+		((GameImpl) game).setUnitAt(new Position(2,3), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+		numberOfRounds(20);
+		game.moveUnit(new Position(2,0), new Position(2,1));
+		game.moveUnit(new Position(2,1), new Position(2,2));
+		game.moveUnit(new Position(2,2), new Position(2,3));
+		assertEquals(Player.RED, game.getWinner());
+	}
+	
+	@Test
+	public void blueShouldWinByWinning3CombatsAfter20PlusRoundsHavePassed(){
+		((GameImpl) game).setUnitAt(new Position(2,1), new UnitImpl(GameConstants.LEGION, Player.RED));
+		((GameImpl) game).setUnitAt(new Position(2,2), new UnitImpl(GameConstants.LEGION, Player.RED));
+		((GameImpl) game).setUnitAt(new Position(2,3), new UnitImpl(GameConstants.LEGION, Player.RED));
+		numberOfRounds(20);
+		game.moveUnit(new Position(3,2), new Position(2,1));
+		game.moveUnit(new Position(2,1), new Position(2,2));
+		game.moveUnit(new Position(2,2), new Position(2,3));
+		assertEquals(Player.BLUE, game.getWinner());
+	}
+	
+	@Test
+	public void redWins3CombatsBefore20RoundsHaveElapsedAndDoesNotWin(){
+		((GameImpl) game).setUnitAt(new Position(2,1), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+		((GameImpl) game).setUnitAt(new Position(2,2), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+		((GameImpl) game).setUnitAt(new Position(2,3), new UnitImpl(GameConstants.LEGION, Player.BLUE));
+		game.moveUnit(new Position(2,0), new Position(2,1));
+		game.moveUnit(new Position(2,1), new Position(2,2));
+		game.moveUnit(new Position(2,2), new Position(2,3));
+		assertNull(game.getWinner());
+	}
+	
+	@Test
+	public void blueWins3CombatsBefore20RoundsHaveElapsedAndDoesNotWin(){
+		((GameImpl) game).setUnitAt(new Position(2,1), new UnitImpl(GameConstants.LEGION, Player.RED));
+		((GameImpl) game).setUnitAt(new Position(2,2), new UnitImpl(GameConstants.LEGION, Player.RED));
+		((GameImpl) game).setUnitAt(new Position(2,3), new UnitImpl(GameConstants.LEGION, Player.RED));
+		game.moveUnit(new Position(3,2), new Position(2,1));
+		game.moveUnit(new Position(2,1), new Position(2,2));
+		game.moveUnit(new Position(2,2), new Position(2,3));
+		assertNull(game.getWinner());
+	}
+	
+	@Test
+    public void redTakesTheBlueCityAfter20RoundAndDoesNotWin(){
+		game.moveUnit(new Position(2,0), new Position(4,1));
+		numberOfRounds(20);
+		assertEquals(Player.RED, game.getCityAt(new Position(4,1)).getOwner());
+		assertNull(game.getWinner());
+	}
+	
+	@Test
+	public void blueTakesTheBlueCityAfter20RoundAndDoesNotWin(){
+		game.moveUnit(new Position(3,2), new Position(1,1));
+		numberOfRounds(20);
+		assertNull(game.getWinner());
 	}
 	
 }
