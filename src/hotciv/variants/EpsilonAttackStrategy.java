@@ -4,11 +4,11 @@ import hotciv.interfacevariants.AttackStrategy;
 import hotciv.interfacevariants.DieStrategy;
 import hotciv.standard.UnitImpl;
 
-public class EpsilonCivAttackStrategy implements AttackStrategy {
+public class EpsilonAttackStrategy implements AttackStrategy {
 	
 	private DieStrategy die1, die2;
 	
-	public EpsilonCivAttackStrategy(DieStrategy die1, DieStrategy die2) {
+	public EpsilonAttackStrategy(DieStrategy die1, DieStrategy die2) {
 		this.die1 = die1;
 		this.die2 = die2;
 	}

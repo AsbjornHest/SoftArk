@@ -4,7 +4,7 @@ import hotciv.TestStubs.FixedDieStrategy;
 import hotciv.framework.*;
 import hotciv.interfacevariants.AttackStrategy;
 import hotciv.interfacevariants.DieStrategy;
-import hotciv.variants.EpsilonCivAttackStrategy;
+import hotciv.variants.EpsilonAttackStrategy;
 import hotciv.variants.EpsilonFactory;
 import hotciv.variants.RandomDieStrategy;
 
@@ -70,7 +70,7 @@ public class TestEpsilonCiv {
 	        UnitImpl defender = (UnitImpl) game.getUnitAt(new Position(4, 4));
 	        assertEquals("The attackers strength: ", 2, attacker.getAttackingStrength());
 	        assertEquals("The defenders strength:", 2, defender.getDefensiveStrength());
-	        AttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(2), new FixedDieStrategy(1));
+	        AttackStrategy as = new EpsilonAttackStrategy(new FixedDieStrategy(2), new FixedDieStrategy(1));
 	        assertTrue("The attacker wins", as.fight(attacker, defender));
 	    }
 	 
@@ -80,7 +80,7 @@ public class TestEpsilonCiv {
 	        UnitImpl defender = (UnitImpl) game.getUnitAt(new Position(4, 4));
 	        assertEquals("The attackers strength: ", 2, attacker.getAttackingStrength());
 	        assertEquals("The defenders strength:", 2, defender.getDefensiveStrength());
-	        AttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(2), new FixedDieStrategy(2));
+	        AttackStrategy as = new EpsilonAttackStrategy(new FixedDieStrategy(2), new FixedDieStrategy(2));
 	        assertTrue("The defender wins", as.fight(defender, attacker));
 	    }
 	 
@@ -90,7 +90,7 @@ public class TestEpsilonCiv {
 	        UnitImpl defender = (UnitImpl) game.getUnitAt(new Position(3, 8));
 	        assertEquals("The attackers strength: ", 4, attacker.getAttackingStrength());
 	        assertEquals("The defenders strength:", 3, defender.getDefensiveStrength());
-	        AttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(1), new FixedDieStrategy(1));
+	        AttackStrategy as = new EpsilonAttackStrategy(new FixedDieStrategy(1), new FixedDieStrategy(1));
 	        assertTrue("The attacker wins", as.fight(attacker, defender));
 	    }
 	 
@@ -100,8 +100,8 @@ public class TestEpsilonCiv {
 	        UnitImpl defender = (UnitImpl) game.getUnitAt(new Position(3, 8));
 	        assertEquals("The attackers strength: ", 4, attacker.getAttackingStrength());
 	        assertEquals("The defenders strength:", 3, defender.getDefensiveStrength());
-	        AttackStrategy as = new EpsilonCivAttackStrategy(new FixedDieStrategy(2), new FixedDieStrategy(3));
-	        assertTrue("The defender wins", as.fight(defender, attacker));
+	        AttackStrategy as = new EpsilonAttackStrategy(new FixedDieStrategy(2), new FixedDieStrategy(3));
+	        assertFalse("The defender wins", as.fight(attacker, defender));
 	    }
 	 
 	 
